@@ -12,7 +12,7 @@ import {
 } from "../ui/card";
 import { Progress } from "../ui/progress";
 import { useSession } from "next-auth/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 
 export default function TodaysIntake() {
@@ -26,14 +26,8 @@ export default function TodaysIntake() {
   const totalMl = glasses * cupSize;
   const totalGoalMl = goal * cupSize;
 
-  useEffect(() => {
-    if (session) {
-      fetchTodaysEntries();
-      fetchUserGoal();
-    }
-  }, [session]);
-
-  const fetchUserGoal = async () => {
+  // Fetch user's water goal
+  const fetchUserGoal = useCallback(async () => {
     try {
       const response = await fetch("/api/water-goal");
       if (!response.ok) throw new Error("Failed to fetch goal");
@@ -44,7 +38,36 @@ export default function TodaysIntake() {
       console.error("Error fetching goal:", error);
       toast.error("Failed to fetch water goal");
     }
-  };
+  }, []);
+
+  // Fetch today's water entries
+  const fetchTodaysEntries = useCallback(async () => {
+    if (!session) return;
+
+    try {
+      const response = await fetch("/api/water-entries");
+      if (!response.ok) throw new Error("Failed to fetch entries");
+
+      const entry = await response.json();
+
+      if (entry && typeof entry.glasses === "number") {
+        setGlasses(entry.glasses);
+      } else {
+        setGlasses(0);
+      }
+    } catch (error) {
+      console.error("Error fetching entries:", error);
+      toast.error("Failed to fetch water entries");
+      setGlasses(0);
+    }
+  }, [session]);
+
+  useEffect(() => {
+    if (session) {
+      fetchTodaysEntries();
+      fetchUserGoal();
+    }
+  }, [session, fetchTodaysEntries, fetchUserGoal]);
 
   const updateUserGoal = async (newGoal: number) => {
     setUpdatingGoal(true);
@@ -72,27 +95,6 @@ export default function TodaysIntake() {
       );
     } finally {
       setUpdatingGoal(false);
-    }
-  };
-
-  const fetchTodaysEntries = async () => {
-    if (!session) return;
-
-    try {
-      const response = await fetch("/api/water-entries");
-      if (!response.ok) throw new Error("Failed to fetch entries");
-
-      const entry = await response.json();
-
-      if (entry && typeof entry.glasses === "number") {
-        setGlasses(entry.glasses);
-      } else {
-        setGlasses(0);
-      }
-    } catch (error) {
-      console.error("Error fetching entries:", error);
-      toast.error("Failed to fetch water entries");
-      setGlasses(0);
     }
   };
 
