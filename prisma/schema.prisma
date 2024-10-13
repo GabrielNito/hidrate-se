@@ -1,0 +1,38 @@
+datasource db {
+    provider = "sqlite"
+    url      = "file:./dev.db"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model User {
+    id                   String       @id @default(cuid())
+    name                 String?
+    nickname             String?      @unique
+    email                String       @unique
+    password             String
+    createdAt            DateTime     @default(now())
+    updatedAt            DateTime     @updatedAt
+    entries              WaterEntry[]
+    waterGoal            Int          @default(8)
+    passwordResetToken   String?      @unique
+    passwordResetExpires DateTime?
+
+    @@map("users")
+}
+
+model WaterEntry {
+    id        String   @id @default(cuid())
+    glasses   Int
+    date      DateTime @default(now())
+    userId    String
+    user      User     @relation(fields: [userId], references: [id])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([userId])
+    @@index([date])
+    @@map("water_entries")
+}
