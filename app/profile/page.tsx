@@ -7,7 +7,7 @@ import Tips from "@/components/Profile/Tips";
 import User from "@/components/Profile/User";
 import { useSession } from "next-auth/react";
 
-export default function page() {
+export default function Page() {
   const { data: session } = useSession();
 
   const userId = session?.user?.id;

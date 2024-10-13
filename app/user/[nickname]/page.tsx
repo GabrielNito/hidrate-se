@@ -29,8 +29,6 @@ interface UserData {
   weeklyWaterData: WaterData[];
 }
 
-const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
 export default function PublicProfile() {
   const { nickname } = useParams();
   const [userData, setUserData] = useState<UserData | null>(null);

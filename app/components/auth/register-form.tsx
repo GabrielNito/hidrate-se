@@ -121,7 +121,7 @@ export function RegisterForm() {
       router.push("/login");
       router.refresh();
     } catch (error) {
-      toast({ title: "Erro", description: "Algo deu errado" });
+      toast({ title: "Erro", description: `Algo deu errado: ${error}` });
     }
   }
 

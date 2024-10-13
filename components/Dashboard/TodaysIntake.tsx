@@ -14,12 +14,6 @@ import { Progress } from "../ui/progress";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { ChartConfig } from "../ui/chart";
-
-interface ChartData {
-  ml: number;
-  fill: string;
-}
 
 export default function TodaysIntake() {
   const { data: session, status } = useSession();
@@ -27,16 +21,6 @@ export default function TodaysIntake() {
   const [goal, setGoal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [updatingGoal, setUpdatingGoal] = useState(false);
-  const [goalProgress, setGoalProgress] = useState<ChartData[]>([]);
-
-  const progressAngle = Math.min((glasses / goal) * 360, 360);
-
-  const goalConfig = {
-    ml: {
-      label: "ml",
-      color: "hsl(var(--chart-2))",
-    },
-  } satisfies ChartConfig;
 
   const cupSize = 250;
   const totalMl = glasses * cupSize;
@@ -48,15 +32,6 @@ export default function TodaysIntake() {
       fetchUserGoal();
     }
   }, [session]);
-
-  useEffect(() => {
-    setGoalProgress([
-      {
-        ml: totalMl,
-        fill: "hsl(var(--chart-2))",
-      },
-    ]);
-  }, [totalMl]);
 
   const fetchUserGoal = async () => {
     try {
@@ -112,13 +87,11 @@ export default function TodaysIntake() {
       if (entry && typeof entry.glasses === "number") {
         setGlasses(entry.glasses);
       } else {
-        // If no entry for today or invalid data, set glasses to 0
         setGlasses(0);
       }
     } catch (error) {
       console.error("Error fetching entries:", error);
       toast.error("Failed to fetch water entries");
-      // Set glasses to 0 in case of error
       setGlasses(0);
     }
   };

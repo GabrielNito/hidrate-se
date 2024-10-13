@@ -63,8 +63,7 @@ export function LoginForm() {
       router.push("/");
       router.refresh();
     } catch (err) {
-      // Renamed 'error' to 'err'
-      setError("Algo deu errado");
+      setError(`Algo deu errado: ${err}`);
     }
   }
 
