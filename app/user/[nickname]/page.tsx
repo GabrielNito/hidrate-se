@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { DropletIcon, CalendarIcon, Copy } from "lucide-react";
+import { DropletIcon, Copy } from "lucide-react";
 import {
   LineChart,
   Line,
@@ -142,14 +142,14 @@ export default function PublicProfile() {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <DropletIcon className="w-5 h-5 mr-2 text-blue-500" />
-                Water Consumption Statistics
+                Estatisticas de Consumo
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="flex justify-between mb-2 text-sm">
-                  <span>Weekly Average</span>
-                  <span>{percentageOfGoal.toFixed(1)}% of goal</span>
+                  <span>Média por semana</span>
+                  <span>{percentageOfGoal.toFixed(1)}% da meta</span>
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-center">
                   <div>
@@ -157,7 +157,7 @@ export default function PublicProfile() {
                       {averageDailyGlasses.toFixed(1)}
                     </div>
                     <div className="text-sm text-muted-foreground">
-                      Avg. glasses per day
+                      Copos por dia em média
                     </div>
                   </div>
                   <div>
@@ -165,7 +165,7 @@ export default function PublicProfile() {
                       {totalWeeklyGlasses}
                     </div>
                     <div className="text-sm text-muted-foreground">
-                      Total glasses this week
+                      Copos essa semana
                     </div>
                   </div>
                 </div>
@@ -203,17 +203,11 @@ function ProfileSkeleton() {
               <div>
                 <div className="flex justify-between mb-2">
                   <Skeleton className="h-4 w-[100px]" />
-                  <Skeleton className="h-4 w-[80px]" />
+                  <Skeleton className="h-4 w-[50px]" />
                 </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4 text-center">
-                <div>
-                  <Skeleton className="h-8 w-[80px] mx-auto mb-1" />
-                  <Skeleton className="h-4 w-[120px] mx-auto" />
-                </div>
-                <div>
-                  <Skeleton className="h-8 w-[80px] mx-auto mb-1" />
-                  <Skeleton className="h-4 w-[120px] mx-auto" />
+                <div className="grid grid-cols-2 gap-4 text-center">
+                  <Skeleton className="h-10" />
+                  <Skeleton className="h-10" />
                 </div>
               </div>
             </div>
@@ -222,10 +216,10 @@ function ProfileSkeleton() {
 
         <Card>
           <CardHeader>
-            <Skeleton className="h-6 w-[200px]" />
+            <Skeleton className="h-6 w-[250px]" />
           </CardHeader>
           <CardContent>
-            <Skeleton className="h-[300px] w-full mb-4" />
+            <Skeleton className="h-40" />
           </CardContent>
         </Card>
       </div>

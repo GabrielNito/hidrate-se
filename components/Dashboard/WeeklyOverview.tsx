@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import {
   Line,
@@ -22,54 +21,44 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { eachDayOfInterval, subDays, format } from "date-fns";
-
 type WaterEntry = {
   id: string;
   date: string;
   glasses: number;
   userId: string;
 };
-
 export default function WeeklyOverview() {
   const fetchWeeklyWaterConsumption = async () => {
     const response = await fetch("/api/weekly-water-consumption");
     if (!response.ok) {
       throw new Error("Failed to fetch weekly water consumption");
     }
-
     return response.json();
   };
   fetchWeeklyWaterConsumption();
-
   const aggregateData = (entries: WaterEntry[]) => {
     const today = new Date();
     const sevenDaysAgo = subDays(today, 6);
-
     const allDays = eachDayOfInterval({ start: sevenDaysAgo, end: today }).map(
       (date) => format(date, "MM/dd")
     );
-
     const aggregated = Object.fromEntries(allDays.map((date) => [date, 0]));
-
     entries.forEach((entry) => {
       const formattedDate = format(new Date(entry.date), "MM/dd");
       if (aggregated[formattedDate] !== undefined) {
         aggregated[formattedDate] += entry.glasses * 250;
       }
     });
-
     return Object.entries(aggregated).map(([date, glasses]) => ({
       date,
       glasses,
     }));
   };
-
   const [chartData, setChartData] = useState<
     { date: string; glasses: number }[]
   >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -84,20 +73,16 @@ export default function WeeklyOverview() {
         setIsLoading(false);
       }
     };
-
     loadData();
   }, []);
-
   const chartConfig = {
     glasses: {
       label: "ml",
       color: "hsl(var(--chart-1))",
     },
   };
-
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-
   return (
     <Card className="w-full max-w-3xl">
       <CardHeader>

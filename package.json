@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "resolutions": {
+    "next-auth": "your-desired-version"
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@prisma/client": "^5.20.0",

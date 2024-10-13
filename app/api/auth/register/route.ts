@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import prisma from "../../../lib/prisma";
+import prisma from "@/app/lib/prisma";
 
 export async function POST(req: Request) {
   try {
@@ -13,7 +13,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if user or nickname already exists
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
@@ -36,10 +35,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
     const user = await prisma.user.create({
       data: {
         email,
@@ -49,11 +46,11 @@ export async function POST(req: Request) {
       },
     });
 
-    // Remove password from response
-    const { password: _, ...userWithoutPassword } = user;
+    const { password: _password, ...userWithoutPassword } = user;
 
     return NextResponse.json({ user: userWithoutPassword }, { status: 201 });
   } catch (error) {
+    console.error("Error creating user:", error);
     return NextResponse.json({ error: "Error creating user" }, { status: 500 });
   }
 }

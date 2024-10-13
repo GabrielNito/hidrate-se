@@ -94,8 +94,6 @@ export function RegisterForm() {
   };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setError(null);
-
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",
@@ -108,7 +106,10 @@ export function RegisterForm() {
       const result = await response.json();
 
       if (!response.ok) {
-        setError(result.error || "Falha no registro");
+        toast({
+          title: "Erro",
+          description: result.error || "Falha no registro",
+        });
         return;
       }
 
@@ -121,7 +122,7 @@ export function RegisterForm() {
       router.push("/login");
       router.refresh();
     } catch (error) {
-      setError("Algo deu errado");
+      toast({ title: "Erro", description: "Algo deu errado" });
     }
   }
 
