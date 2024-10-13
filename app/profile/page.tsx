@@ -9,6 +9,8 @@ import User from "@/components/Profile/User";
 export default function page() {
   const userId = "cm243ii8a00005qs6zrsvmiig";
 
+  document.title = "Hidrate-se | Profile";
+
   return (
     <>
       <Navbar />

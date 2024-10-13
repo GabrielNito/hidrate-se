@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 export default function LoginPage() {
   const router = useRouter();
 
+  document.title = "Hidrate-se | Login";
+
   return (
     <div className="relative min-h-[100svh] flex items-center justify-center px-4">
       <div className="absolute top-8 right-8 flex gap-2 items-center">

@@ -59,7 +59,7 @@ function getConsistencyBadge(entries: WaterEntry[]): Badge | null {
     (a, b) => b.date.getTime() - a.date.getTime()
   );
   let streak = 0;
-  let currentDate = new Date();
+  const currentDate = new Date();
 
   for (const entry of sortedEntries) {
     if (entry.date.toDateString() === currentDate.toDateString()) {

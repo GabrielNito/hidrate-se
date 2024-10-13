@@ -7,6 +7,14 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const metadata = {
+  title: "Hidrate-se | Home",
+  description: "Monitore sua ingestão de água",
+  icons: {
+    icon: "/logo.svg",
+  },
+};
+
 export default async function RootLayout({
   children,
 }: {

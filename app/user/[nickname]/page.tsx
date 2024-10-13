@@ -97,6 +97,8 @@ export default function PublicProfile() {
     };
   });
 
+  document.title = `Hidrate-se | ${userInfo.name}`;
+
   return (
     <>
       <Navbar />

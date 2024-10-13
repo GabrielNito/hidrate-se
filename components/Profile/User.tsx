@@ -5,7 +5,6 @@ import { Card, CardHeader, CardTitle } from "../ui/card";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Skeleton } from "../ui/skeleton";
 import { Copy } from "lucide-react";
-import Link from "next/link";
 import { Button } from "../ui/button";
 
 interface User {
