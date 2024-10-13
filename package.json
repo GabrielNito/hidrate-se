@@ -11,6 +11,11 @@
   "resolutions": {
     "next-auth": "your-desired-version"
   },
+  "eslintConfig": {
+    "rules": {
+      "no-var": 0
+    }
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@prisma/client": "^5.20.0",

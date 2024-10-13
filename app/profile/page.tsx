@@ -5,9 +5,12 @@ import Achievements from "@/components/Profile/Achievements";
 import Statistics from "@/components/Profile/Statistics";
 import Tips from "@/components/Profile/Tips";
 import User from "@/components/Profile/User";
+import { useSession } from "next-auth/react";
 
 export default function page() {
-  const userId = "cm243ii8a00005qs6zrsvmiig";
+  const { data: session } = useSession();
+
+  const userId = session?.user?.id;
 
   document.title = "Hidrate-se | Profile";
 

@@ -88,7 +88,7 @@ export default function WeeklyOverview() {
       <CardHeader>
         <CardTitle>Consumo de Água</CardTitle>
         <CardDescription>
-          Quantidade de Água consumida nos ultimos 7 dias (em ml)
+          Quantidade de Água consumida nos últimos 7 dias (em ml)
         </CardDescription>
       </CardHeader>
       <CardContent>

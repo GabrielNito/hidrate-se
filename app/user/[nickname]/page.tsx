@@ -5,15 +5,6 @@ import { useParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DropletIcon, Copy } from "lucide-react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 import WeeklyOverview from "@/components/User/Chart";
 import Navbar from "@/components/Navbar/Navbar";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -84,18 +75,6 @@ export default function PublicProfile() {
   );
   const averageDailyGlasses = totalWeeklyGlasses / 7;
   const percentageOfGoal = (averageDailyGlasses / userInfo.waterGoal) * 100;
-
-  const chartData = daysOfWeek.map((day) => {
-    const dataForDay = weeklyWaterData.find(
-      (d) =>
-        new Date(d.date).toLocaleDateString("en-US", { weekday: "short" }) ===
-        day
-    );
-    return {
-      name: day,
-      glasses: dataForDay ? dataForDay.glasses : 0,
-    };
-  });
 
   document.title = `Hidrate-se | ${userInfo.name}`;
 

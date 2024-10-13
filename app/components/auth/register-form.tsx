@@ -55,7 +55,6 @@ const formSchema = z.object({
 
 export function RegisterForm() {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
   const [stage, setStage] = useState(1);
   const [weight, setWeight] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -252,7 +251,6 @@ export function RegisterForm() {
                 />
               </>
             )}
-            {error && <div className="text-red-500 text-sm">{error}</div>}
           </form>
         </Form>
       </CardContent>

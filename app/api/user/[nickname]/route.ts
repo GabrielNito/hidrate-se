@@ -45,7 +45,7 @@ export async function GET(
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    const { password, ...userInfo } = user;
+    const { ...userInfo } = user;
 
     const weeklyWaterData = await getWeeklyWaterConsumption(user.id);
 

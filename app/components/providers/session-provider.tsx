@@ -1,13 +1,18 @@
 "use client";
 
 import { SessionProvider as NextAuthSessionProvider } from "next-auth/react";
+import { Session } from "next-auth";
+
+interface CustomSession extends Session {
+  expires: string;
+}
 
 export default function SessionProvider({
   children,
   session,
 }: {
   children: React.ReactNode;
-  session: any;
+  session: CustomSession | null | undefined;
 }) {
   return (
     <NextAuthSessionProvider session={session}>

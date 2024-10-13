@@ -34,10 +34,15 @@ export default function Navbar() {
 
   return (
     <div className="flex w-full px-12 py-4 max-md:px-4 items-center justify-between">
-      <Button variant="ghost" asChild>
+      <Button className="max-md:hidden" variant="ghost" asChild>
         <Link href="/" className="flex items-center gap-2">
           <GlassWater />
           <h1 className="text-lg font-medium">Hidrate-se</h1>
+        </Link>
+      </Button>
+      <Button className="md:hidden" variant="ghost" asChild size="icon">
+        <Link href="/" className="flex items-center gap-2">
+          <GlassWater />
         </Link>
       </Button>
       <form onSubmit={handleSearch} className="flex-1 max-w-sm mx-4">
