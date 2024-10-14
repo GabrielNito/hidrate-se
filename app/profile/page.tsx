@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 export default function Page() {
   const { data: session } = useSession();
 
-  const userId = session?.user?.id;
+  const userId = session?.user.id;
 
   document.title = "Hidrate-se | Profile";
 
@@ -22,9 +22,12 @@ export default function Page() {
           <User />
 
           <div className="max-md:flex max-md:flex-col max-md:gap-4 md:grid md:gap-4 md:grid-cols-2">
-            <Statistics userId={userId} />
-
-            <Achievements userId={userId} />
+            {userId && (
+              <>
+                <Statistics userId={userId} />
+                <Achievements userId={userId} />
+              </>
+            )}
 
             <Tips />
           </div>
