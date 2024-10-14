@@ -1,15 +1,13 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/";
+import { authOptions } from "@/app/lib/auth";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const session = await getSession({ req });
+export async function GET(req: NextRequest) {
+  const session = await getServerSession(authOptions);
 
   if (!session) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const userId = session.user?.id;
@@ -24,8 +22,8 @@ export default async function handler(
   });
 
   if (!user) {
-    return res.status(404).json({ message: "User not found" });
+    return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
 
-  return res.status(200).json(user);
+  return NextResponse.json(user, { status: 200 });
 }
