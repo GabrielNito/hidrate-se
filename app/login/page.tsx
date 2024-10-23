@@ -3,11 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { LoginForm } from "../components/auth/login-form";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function LoginPage() {
   const router = useRouter();
-
-  document.title = "Hidrate-se | Login";
+  useEffect(() => {
+    document.title = "Hidrate-se | Login";
+  }, []);
 
   return (
     <div className="relative min-h-[100svh] flex items-center justify-center px-4">
@@ -18,6 +21,8 @@ export default function LoginPage() {
         </Button>
       </div>
       <LoginForm />
+
+      <Toaster />
     </div>
   );
 }

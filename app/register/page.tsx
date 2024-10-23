@@ -3,11 +3,15 @@
 import { useRouter } from "next/navigation";
 import { RegisterForm } from "../components/auth/register-form";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/toaster";
+import { useEffect } from "react";
 
 export default function RegisterPage() {
   const router = useRouter();
 
-  document.title = "Hidrate-se | Cadastro";
+  useEffect(() => {
+    document.title = "Hidrate-se | Cadastro";
+  }, []);
 
   return (
     <div className="min-h-[100svh] flex items-center justify-center px-4">
@@ -18,6 +22,8 @@ export default function RegisterPage() {
         </Button>
       </div>
       <RegisterForm />
+
+      <Toaster />
     </div>
   );
 }

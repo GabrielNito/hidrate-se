@@ -9,6 +9,7 @@ import WeeklyOverview from "@/components/User/Chart";
 import Navbar from "@/components/Navbar/Navbar";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import UserNotFound from "@/components/User/UserNotFound";
 
 interface UserInfo {
   id: string;
@@ -62,7 +63,7 @@ export default function PublicProfile() {
   }
 
   if (!userData) {
-    return <div className="text-center text-lg">User not found</div>;
+    return <UserNotFound />;
   }
 
   const { userInfo, weeklyWaterData } = userData;

@@ -105,9 +105,12 @@ export function RegisterForm() {
       const result = await response.json();
 
       if (!response.ok) {
+        console.log(result);
+
         toast({
           title: "Erro",
           description: result.error || "Falha no registro",
+          variant: "destructive",
         });
         return;
       }

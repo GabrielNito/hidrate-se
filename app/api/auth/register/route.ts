@@ -23,14 +23,14 @@ export async function POST(req: Request) {
 
     if (existingUser) {
       return NextResponse.json(
-        { error: "User already exists" },
+        { error: "Este email já está associado a outra conta" },
         { status: 400 }
       );
     }
 
     if (existingNickname) {
       return NextResponse.json(
-        { error: "Nickname already taken" },
+        { error: "Esse nickname já existe" },
         { status: 400 }
       );
     }

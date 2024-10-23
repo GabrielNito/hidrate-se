@@ -6,13 +6,17 @@ import Statistics from "@/components/Profile/Statistics";
 import Tips from "@/components/Profile/Tips";
 import User from "@/components/Profile/User";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 export default function Page() {
   const { data: session } = useSession();
 
   const userId = session?.user.id;
+  const userName = session?.user.name;
 
-  document.title = "Hidrate-se | Profile";
+  useEffect(() => {
+    document.title = `Hidrate-se | ${userName}`;
+  }, []);
 
   return (
     <>

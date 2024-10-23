@@ -87,6 +87,9 @@ export default function WeeklyOverview({ nickUser }: WeeklyOverviewProps) {
 
   const aggregateData = (weeklyWaterData: WaterData[]) => {
     const today = new Date();
+    today.setDate(today.getDate() - 1);
+    today.setHours(23, 59, 59, 999);
+
     const sevenDaysAgo = subDays(today, 6);
 
     const allDays = eachDayOfInterval({ start: sevenDaysAgo, end: today }).map(
@@ -98,7 +101,7 @@ export default function WeeklyOverview({ nickUser }: WeeklyOverviewProps) {
     weeklyWaterData.forEach((entry) => {
       const formattedDate = format(parseISO(entry.date), "MM/dd");
       if (aggregated[formattedDate] !== undefined) {
-        aggregated[formattedDate] += entry.glasses * 250; // Convert glasses to ml
+        aggregated[formattedDate] += entry.glasses * 250;
       }
     });
 

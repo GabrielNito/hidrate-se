@@ -55,6 +55,8 @@ export function LoginForm() {
         redirect: false,
       });
 
+      console.log(result);
+
       if (result?.error) {
         setError("Credenciais inválidas");
         return;
