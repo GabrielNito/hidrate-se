@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { LoginForm } from "../components/auth/login-form";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { Toaster } from "@/components/ui/toaster";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -21,8 +20,6 @@ export default function LoginPage() {
         </Button>
       </div>
       <LoginForm />
-
-      <Toaster />
     </div>
   );
 }

@@ -12,9 +12,10 @@ export default function Page() {
   const { data: session } = useSession();
 
   const userId = session?.user.id;
-  const userName = session?.user.name;
 
   useEffect(() => {
+    const userName = session?.user.name;
+
     document.title = `Hidrate-se | ${userName}`;
   }, []);
 

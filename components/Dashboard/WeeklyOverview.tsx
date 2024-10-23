@@ -54,9 +54,9 @@ export default function WeeklyOverview() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const nickname = session?.user.nickname;
-
     const fetchUserData = async () => {
+      const nickname = session?.user.nickname;
+
       if (!nickname) return;
 
       try {
