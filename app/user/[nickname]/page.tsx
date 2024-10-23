@@ -107,9 +107,6 @@ export default function PublicProfile() {
                       />
                     </Button>
                   </div>
-                  <div className="text-sm text-muted-foreground">
-                    {userInfo.email || "No email provided"}
-                  </div>
                 </div>
               </div>
             </CardHeader>

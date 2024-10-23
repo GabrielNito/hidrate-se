@@ -2,10 +2,10 @@
 
 import { useSession } from "next-auth/react";
 import TodaysIntake from "@/components/Dashboard/TodaysIntake";
-import WeeklyOverview from "@/components/Dashboard/WeeklyOverview";
 import Navbar from "@/components/Navbar/Navbar";
 import LoadingPage from "./components/auth/LoadingPage";
 import AccessDenied from "./components/auth/AccessDenied";
+import WeeklyOverview from "@/components/Dashboard/WeeklyOverview";
 
 export default function Dashboard() {
   const { status } = useSession();

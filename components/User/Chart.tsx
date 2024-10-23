@@ -43,14 +43,22 @@ interface UserData {
   weeklyWaterData: WaterData[];
 }
 
-export default function WeeklyOverview() {
-  const { nickname } = useParams();
+interface WeeklyOverviewProps {
+  nickUser?: string;
+}
+
+export default function WeeklyOverview({ nickUser }: WeeklyOverviewProps) {
+  let { nickname } = useParams();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [chartData, setChartData] = useState<
     { date: string; glasses: number }[]
   >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  if (nickUser) {
+    nickname = nickUser;
+  }
 
   useEffect(() => {
     const fetchUserData = async () => {

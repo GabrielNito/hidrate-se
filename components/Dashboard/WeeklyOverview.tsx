@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import {
   Line,
@@ -20,69 +21,106 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { eachDayOfInterval, subDays, format } from "date-fns";
-type WaterEntry = {
+import { eachDayOfInterval, subDays, format, parseISO } from "date-fns";
+import { useSession } from "next-auth/react";
+
+interface UserInfo {
   id: string;
+  name: string;
+  nickname: string;
+  email: string;
+  createdAt: string;
+  waterGoal: number;
+}
+
+interface WaterData {
   date: string;
   glasses: number;
-  userId: string;
-};
+}
+
+interface UserData {
+  userInfo: UserInfo;
+  weeklyWaterData: WaterData[];
+}
+
 export default function WeeklyOverview() {
-  const fetchWeeklyWaterConsumption = async () => {
-    const response = await fetch("/api/weekly-water-consumption");
-    if (!response.ok) {
-      throw new Error("Failed to fetch weekly water consumption");
-    }
-    return response.json();
-  };
-  fetchWeeklyWaterConsumption();
-  const aggregateData = (entries: WaterEntry[]) => {
-    const today = new Date();
-    const sevenDaysAgo = subDays(today, 6);
-    const allDays = eachDayOfInterval({ start: sevenDaysAgo, end: today }).map(
-      (date) => format(date, "MM/dd")
-    );
-    const aggregated = Object.fromEntries(allDays.map((date) => [date, 0]));
-    entries.forEach((entry) => {
-      const formattedDate = format(new Date(entry.date), "MM/dd");
-      if (aggregated[formattedDate] !== undefined) {
-        aggregated[formattedDate] += entry.glasses * 250;
-      }
-    });
-    return Object.entries(aggregated).map(([date, glasses]) => ({
-      date,
-      glasses,
-    }));
-  };
+  const { data: session } = useSession();
+
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [chartData, setChartData] = useState<
     { date: string; glasses: number }[]
   >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    const loadData = async () => {
+    const nickname = session?.user.nickname;
+
+    const fetchUserData = async () => {
+      if (!nickname) return;
+
       try {
-        const entries = await fetchWeeklyWaterConsumption();
-        console.log(entries);
-        const aggregatedData = aggregateData(entries);
-        console.log(aggregatedData);
-        setChartData(aggregatedData);
-        setIsLoading(false);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred");
+        const res = await fetch(`/api/user/${nickname}`);
+        if (res.ok) {
+          const data = await res.json();
+          console.log(data);
+
+          setUserData(data);
+          const aggregatedData = aggregateData(data.weeklyWaterData);
+          console.log(aggregatedData);
+
+          setChartData(aggregatedData);
+        } else {
+          setError("User not found");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setError("An error occurred while fetching data");
+      } finally {
         setIsLoading(false);
       }
     };
-    loadData();
+
+    fetchUserData();
   }, []);
+
+  const aggregateData = (weeklyWaterData: WaterData[]) => {
+    const today = new Date();
+    today.setDate(today.getDate() - 1);
+    today.setHours(23, 59, 59, 999);
+
+    const sevenDaysAgo = subDays(today, 6);
+
+    const allDays = eachDayOfInterval({ start: sevenDaysAgo, end: today }).map(
+      (date) => format(date, "MM/dd")
+    );
+
+    const aggregated = Object.fromEntries(allDays.map((date) => [date, 0]));
+
+    weeklyWaterData.forEach((entry) => {
+      const formattedDate = format(parseISO(entry.date), "MM/dd");
+      if (aggregated[formattedDate] !== undefined) {
+        aggregated[formattedDate] += entry.glasses * 250;
+      }
+    });
+
+    return Object.entries(aggregated).map(([date, glasses]) => ({
+      date,
+      glasses,
+    }));
+  };
+
   const chartConfig = {
     glasses: {
       label: "ml",
       color: "hsl(var(--chart-1))",
     },
   };
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+  if (!userData) return <div>No user data available</div>;
+
   return (
     <Card className="w-full max-w-3xl">
       <CardHeader>

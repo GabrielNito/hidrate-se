@@ -106,14 +106,6 @@ export function LoginForm() {
             />
             {error && <div className="text-red-500 text-sm">{error}</div>}
             <div className="flex justify-between">
-              <Button
-                variant="link"
-                className="px-1"
-                type="button"
-                onClick={() => router.push("/recovery-request")}
-              >
-                Esqueci minha senha
-              </Button>
               <Button type="submit">Entrar</Button>
             </div>
           </form>
