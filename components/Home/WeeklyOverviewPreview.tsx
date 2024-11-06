@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/chart";
 
 export default function WeeklyOverviewPreview() {
-  // Mock data for the chart
   const chartData = [
     { date: "05/01", glasses: 1500 },
     { date: "05/02", glasses: 1750 },
@@ -41,7 +40,12 @@ export default function WeeklyOverviewPreview() {
   };
 
   return (
-    <Card className="w-full max-w-3xl">
+    <Card
+      className="w-full"
+      style={{
+        boxShadow: "inset -22px 22px 44px var(--highlight)",
+      }}
+    >
       <CardHeader>
         <CardTitle>Consumo de Água</CardTitle>
         <CardDescription>
@@ -50,26 +54,26 @@ export default function WeeklyOverviewPreview() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[400px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              data={chartData}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <ChartTooltip content={<ChartTooltipContent />} />
-              <Line
-                type="monotone"
-                dataKey="glasses"
-                stroke="var(--color-glasses)"
-                strokeWidth={2}
-                dot={{ fill: "var(--color-glasses)", r: 4 }}
-                activeDot={{ r: 6 }}
-                name="ml"
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          {/* <ResponsiveContainer width="100%" height="100%"> */}
+          <LineChart
+            data={chartData}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <ChartTooltip content={<ChartTooltipContent />} />
+            <Line
+              type="monotone"
+              dataKey="glasses"
+              stroke="var(--color-glasses)"
+              strokeWidth={2}
+              dot={{ fill: "var(--color-glasses)", r: 4 }}
+              activeDot={{ r: 6 }}
+              name="ml"
+            />
+          </LineChart>
+          {/* </ResponsiveContainer> */}
         </ChartContainer>
       </CardContent>
     </Card>

@@ -1,7 +1,6 @@
-import TodaysIntakePreview from "./TodaysIntakePreview";
-import NavbarPreview from "./NavbarPreview";
+import DashboardUser from "./DashboardUser";
 
-export default function DashboardPreview() {
+export default function DashboardPreviewUser() {
   return (
     <div className="h-fit p-20 flex justify-center items-center">
       <div className="w-full" style={{ perspective: "1500px" }}>
@@ -20,11 +19,9 @@ export default function DashboardPreview() {
             }}
             className="rounded-xl"
           >
-            <NavbarPreview />
-
             <div className="container mx-auto p-4 flex flex-col items-center ">
               <div className="w-full flex flex-col gap-4">
-                <TodaysIntakePreview />
+                <DashboardUser />
               </div>
             </div>
           </div>

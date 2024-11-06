@@ -77,7 +77,7 @@ export default function NavbarHome() {
               className="rounded-full"
               asChild
             >
-              <Link href={user ? "/profile" : "/login"}>
+              <Link href={user ? "/dashboard" : "/login"}>
                 <Avatar>
                   <AvatarFallback>
                     {user?.name?.slice(0, 2).toUpperCase() || (

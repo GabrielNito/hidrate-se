@@ -62,7 +62,7 @@ export function LoginForm() {
         return;
       }
 
-      router.push("/");
+      router.push("/dashboard");
       router.refresh();
     } catch (err) {
       setError(`Algo deu errado: ${err}`);
