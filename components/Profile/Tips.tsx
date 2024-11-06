@@ -12,13 +12,18 @@ export default function Tips() {
       </CardHeader>
       <CardContent>
         <ul className="space-y-2 text-sm">
-          <li>• Instale chuveiros e torneiras eficientes em água</li>
-          <li>• Conserte canos e torneiras com vazamentos rapidamente</li>
           <li>
-            • Regue seu jardim durante as horas mais frescas para reduzir a
-            evaporação
+            • Beba água aos poucos ao longo do dia, não espere sentir sede
           </li>
-          <li>• Colete água da chuva para regar plantas</li>
+          <li>• Tenha uma garrafa de água sempre ao seu alcance</li>
+          <li>
+            • Ajuste sua ingestão de água em dias de atividades físicas ou em
+            clima quente
+          </li>
+          <li>
+            • Defina pequenas metas diárias de consumo de água e acompanhe seu
+            progresso
+          </li>
         </ul>
       </CardContent>
     </Card>

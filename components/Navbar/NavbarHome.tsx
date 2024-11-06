@@ -5,16 +5,15 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { ModeToggle } from "../mode-toggle";
-import { GlassWater, LogIn, LogOut, Search, User2 } from "lucide-react";
+import { GlassWater, LogIn, LogOut, User2 } from "lucide-react";
+import { Separator } from "../ui/separator";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "../ui/hover-card";
-import { Separator } from "../ui/separator";
 import {
   Tooltip,
   TooltipContent,
@@ -22,7 +21,7 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 
-export default function Navbar() {
+export default function NavbarHome() {
   const { data: session } = useSession();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const router = useRouter();
@@ -46,36 +45,12 @@ export default function Navbar() {
 
   return (
     <div className="flex w-full px-12 py-4 max-md:px-4 items-center justify-between">
-      <Button className="max-md:hidden" variant="ghost" asChild>
-        <Link href="/" className="flex items-center gap-2">
-          <GlassWater />
-          <h1 className="text-lg font-medium">Hidrate-se</h1>
-        </Link>
-      </Button>
-      <Button className="md:hidden" variant="ghost" asChild size="icon">
+      <Button variant="ghost" asChild size="icon">
         <Link href="/" className="flex items-center gap-2">
           <GlassWater />
         </Link>
       </Button>
-      <form onSubmit={handleSearch} className="flex-1 max-w-sm mx-4">
-        <div className="relative">
-          <Input
-            type="text"
-            placeholder="Procurar usuário..."
-            value={searchQuery}
-            onChange={handleInputChange}
-            className="pr-8"
-          />
-          <Button
-            type="submit"
-            variant="ghost"
-            size="icon"
-            className="absolute right-0 top-0 h-full"
-          >
-            <Search className="w-4 h-4" />
-          </Button>
-        </div>
-      </form>
+
       <div className="flex items-center gap-2">
         <ModeToggle />
 
@@ -123,6 +98,17 @@ export default function Navbar() {
                     @{user?.nickname || "No nickname provided"}
                   </p>
                 </div>
+                <Separator />
+                <Button
+                  variant="ghost"
+                  className="flex gap-1 items-center"
+                  asChild
+                >
+                  <Link href="/profile">
+                    <User2 />
+                    Perfil
+                  </Link>
+                </Button>
               </div>
             ) : (
               <div className="flex flex-col justify-center items-center gap-2">
@@ -138,6 +124,15 @@ export default function Navbar() {
             )}
           </HoverCardContent>
         </HoverCard>
+        {/* <Button variant="ghost" size="icon" className="rounded-full" asChild>
+          <Link href="/profile">
+            <Avatar>
+              <AvatarFallback>
+                {user?.name?.slice(0, 2).toUpperCase() || "U"}
+              </AvatarFallback>
+            </Avatar>
+          </Link>
+        </Button> */}
       </div>
     </div>
   );
